@@ -1,0 +1,13 @@
+.login-deco-container {
+    width: 100%;
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    
+    .login-deco-div {
+        width: 40px;
+        height: 2px;
+        background-color: #a37f1a;
+    }
+}
