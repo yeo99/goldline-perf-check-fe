@@ -1,14 +1,13 @@
 import React from 'react'
-import './Login.scss'
-
 import LoginDeco from '../../components/LoginDeco/LoginDeco'
+import './Register.scss'
 import { Link } from 'react-router-dom'
 
-function login() {
+function Register() {
   return (
-    <div className='login-page-container'>
+    <div className='register-page-container'>
         <div className='login-page-wrap'>
-            <div className='login-head'>로그인</div>
+            <div className='login-head'>회원가입</div>
             <LoginDeco></LoginDeco>
             <div className='login-form-wrap'>
               <div className='login-form-row'>
@@ -33,4 +32,4 @@ function login() {
   )
 }
 
-export default login
+export default Register

@@ -1,0 +1,67 @@
+@import '../../styles/common/placeholder.scss';
+
+.register-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    .login-page-wrap {
+        background-color: #fafafa;
+        padding: 90px 0 90px 0;
+        width: 940px;
+    
+        .login-head {
+            display: flex;
+            justify-content: center;
+            font-size: 28px;
+            color: #28366B;
+            font-family: 'NotoSansKrBold';
+        }
+    
+        .login-form-wrap {
+            padding: 55px 0 25px 0;
+            .login-form-row:first-child {
+                margin-bottom: 12px;
+            }
+            .login-form-row {
+                display: flex;
+                justify-content: center;
+    
+                label {
+                    font-family: 'NotoSansKrRegular';
+                    display: flex;
+                    align-items: center;
+                    text-align: left;
+                    width: 85px;
+                }
+    
+                #id, #password {
+                    width: 302px;
+                    height: 38px;
+                    border: 1px solid #cccccc;
+                }
+            }
+        }
+    
+    }
+    .login-buttons-wrap {
+        display: flex;
+        justify-content: center;
+        // width: 387px;
+        
+        .login-buttons {
+            width: 387px;
+            display: block;
+            font-family: 'NotoSansKrBold';
+            font-size: 15px;
+            border: none;
+            height: 38px;
+            color: white;
+            background-color: #28366B;
+            &:first-child {
+                margin-bottom: 8px;
+            }
+        }
+    }
+}
