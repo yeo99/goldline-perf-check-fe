@@ -6,12 +6,12 @@
     align-items: center;
     height: 100vh;
 
-    .login-page-wrap {
+    .register-page-wrap {
         background-color: #fafafa;
         padding: 90px 0 90px 0;
         width: 940px;
     
-        .login-head {
+        .register-head {
             display: flex;
             justify-content: center;
             font-size: 28px;
@@ -19,12 +19,12 @@
             font-family: 'NotoSansKrBold';
         }
     
-        .login-form-wrap {
+        .register-form-wrap {
             padding: 55px 0 25px 0;
-            .login-form-row:first-child {
+            .register-form-row:not(:last-child) {
                 margin-bottom: 12px;
             }
-            .login-form-row {
+            .register-form-row {
                 display: flex;
                 justify-content: center;
     
@@ -36,7 +36,7 @@
                     width: 85px;
                 }
     
-                #id, #password {
+                #user_id, #user_password, #user_name, #user_email, #user_cellphone, #user_birth_date, #user_company, select {
                     width: 302px;
                     height: 38px;
                     border: 1px solid #cccccc;
@@ -45,12 +45,12 @@
         }
     
     }
-    .login-buttons-wrap {
+    .register-buttons-wrap {
         display: flex;
         justify-content: center;
         // width: 387px;
         
-        .login-buttons {
+        .register-buttons {
             width: 387px;
             display: block;
             font-family: 'NotoSansKrBold';
