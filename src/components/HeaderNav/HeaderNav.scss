@@ -1,0 +1,13 @@
+.navbar-brand {
+    font-family: 'NotoSansKrRegular';
+    cursor: pointer;
+}
+
+#basic-nav-dropdown {
+    font-family: 'NotoSansKrLight';
+    cursor: pointer;
+
+    .dropdown-item {
+        font-family: 'NotoSansKrLight';
+    }
+}

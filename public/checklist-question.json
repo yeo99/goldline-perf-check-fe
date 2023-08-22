@@ -1,0 +1,201 @@
+{
+    "A000" : [
+        {
+            "stability_questions" : [
+                "물리적 상태평가 결과",
+                "내진성능"
+            ],
+            "stability_questions_standars" : [
+                {
+                    "sub_questions": {
+                        "불량" : 1,
+                        "미흡" : 2,
+                        "보통" : 3,
+                        "양호" : 4,
+                        "우수" : 5
+                    }
+                },
+                {
+                    "sub_questions" : {
+                        "내진성능 무" : 1,
+                        "내진성능 유(내진성능 불필요 포함)" : 5
+                    }
+                }
+            ]
+        },
+        {
+            "durability_questions" : [
+                "열차 통과 톤수(누적)",
+                "경과 연수"
+            ],
+            "durability_questions_standars" : [
+                {
+                    "sub_questions" : {
+                        "10억톤 이상" : 1,
+                        "8억톤 ~ 10억톤 미만" : 2,
+                        "6억톤 ~ 8억톤 미만" : 3,
+                        "3억톤 ~ 6억톤 미만" : 4,
+                        "3억톤 미만" : 5
+                    }
+                },
+                {
+                    "sub_questions" : {
+                        "내용연수의 100% 이상" : 1,
+                        "내용연수의 75% ～ 100% 미만" : 2,
+                        "내용연수의 50% ～ 75% 미만" : 3,
+                        "내용연수의 25% ～ 50% 미만" : 4,
+                        "내용연수의 25% 미만" : 5
+                    }
+                }
+            ]
+        },
+        {
+            "usability_questions" : [
+                "재해 발생 횟수(5년 이내)"
+            ],
+            "usability_questions_standards" : [
+                {
+                    "sub_questions" : {
+                        "2회 이상" : 1,
+                        "1회" : 3,
+                        "발생 없음" : 5
+                    }
+                }
+            ]
+        }
+    ],
+
+
+
+    "B100" : [
+        {
+            "stability_questions" : [
+                "물리적 상태평가 결과"
+            ],
+            "stability_questions_standars" : [
+                {
+                    "sub_questions": {
+                        "불량" : 1,
+                        "미흡" : 2,
+                        "보통" : 3,
+                        "양호" : 4,
+                        "우수" : 5
+                    }
+                }
+            ]
+        },
+        {
+            "durability_questions" : [
+                "열차속도",
+                "열차 통과 톤수(누적)"
+            ],
+            "durability_questions_standars" : [
+                {
+                    "sub_questions" : {
+                        "80km/h 이상" : 1,
+                        "80km/h ～ 65km/h 미만" : 2,
+                        "65km/h ～ 50km/h 미만" : 3,
+                        "50km/h ～ 35km/h 미만" : 4,
+                        "35km/h 미만" : 5
+                    }
+                },
+                {
+                    "sub_questions" : {
+                        "10억톤 이상" : 1,
+                        "8억톤 ～ 10억톤 미만" : 2,
+                        "6억톤 ～ 8억톤 미만" : 3,
+                        "3억톤 ~ 6억톤 미만" : 4,
+                        "3억톤 미만" : 5
+                    }
+                }
+            ]
+        },
+        {
+            "usability_questions" : [
+                "배수상태"
+            ],
+            "usability_questions_standards" : [
+                {
+                    "sub_questions" : {
+                        "전체적으로 극히 불량" : 1,
+                        "전체적으로 불량" : 2,
+                        "일부면적 불량" : 3,
+                        "양호" : 4,
+                        "최상" : 5
+                    }
+                }
+            ]
+        }
+    ],
+
+
+
+    "B200" : [
+        {
+            "stability_questions" : [
+                "물리적 상태평가 결과"
+            ],
+            "stability_questions_standars" : [
+                {
+                    "sub_questions": {
+                        "불량" : 1,
+                        "미흡" : 2,
+                        "보통" : 3,
+                        "양호" : 4,
+                        "우수" : 5
+                    }
+                }
+            ]
+        },
+        {
+            "durability_questions" : [
+                "레일 마모량",
+                "레일 종류",
+                "열차 통과 톤수(누적)"
+            ],
+            "durability_questions_standars" : [
+                {
+                    "sub_questions" : {
+                        "레일마모 기준치 대비 90% 이상" : 1,
+                        "레일마모 기준치 대비 80% ～ 90% 미만" : 2,
+                        "레일마모 기준치 대비 70% ～ 80% 미만" : 3,
+                        "레일마모 기준치 대비 60% ～ 70% 미만" : 4,
+                        "레일마모 기준치 대비 60% 미만" : 5
+                    }
+                },
+                {
+                    "sub_questions" : {
+                        "37kg" : 1,
+                        "50kg" : 3,
+                        "60kg" : 5
+                    }
+                },
+                {
+                    "sub_questions" : {
+                        "10억톤 이상" : 1,
+                        "8억톤 ～ 10억톤 미만" : 2,
+                        "6억톤 ～ 8억톤 미만" : 3,
+                        "3억톤 ～ 6억톤 미만" : 4,
+                        "3억톤 미만" : 5
+                    }
+                }
+            ]
+        },
+        {
+            "usability_questions" : [
+                "레일에 의한 고장, 장애 횟수"
+            ],
+            "usability_questions_standards" : [
+                {
+                    "sub_questions" : {
+                        "연 4회 이상" : 1,
+                        "연 3회" : 2,
+                        "연 2회" : 3,
+                        "연 1회" : 4,
+                        "무" : 5
+                    }
+                }
+            ]
+        }
+    ]
+}
