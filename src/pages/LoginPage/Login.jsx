@@ -1,26 +1,33 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './Login.scss'
 import LoginDeco from '../../components/LoginDeco/LoginDeco'
 import { Link, useNavigate } from 'react-router-dom'
 import { createAxios } from '../../api/axiosInstance'
+import { useForm, checkEmptyFields } from '../../utils/formUtils'
 
 function Login() {
-  const [userId, setUserId] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  const { formData, handleInputChange } = useForm({
+    user_id: '',
+    user_password: ''
+  });
+
+  // 검증이 필요한 빈 폼
+  const requiredFields = [
+    { key: "user_id", label: "아이디" },
+    { key: "user_password", label: "비밀번호" },
+  ]
+
   const handleLogin = async (e) => {
-    e.preventDefault(); // 새로고침 방지
+    e.preventDefault();
+    const errorMsg = checkEmptyFields(formData, requiredFields);
+    if (errorMsg) { alert(errorMsg); return; }
     try {
-      const response = await createAxios.post('/login', {
-        user_id: userId,
-        user_password: password
-      })
+      const response = await createAxios.post('/login', formData);
       navigate('/main')
     } catch (err) {
-      // 서버에서 보낸 오류 메세지 설정
-      setError(err.response.data.error)
+      alert(err.response.data.error)
     }
   }
 
@@ -32,12 +39,24 @@ function Login() {
             <form onSubmit={handleLogin}>
             <div className='login-form-wrap'>
               <div className='login-form-row'>
-                <label htmlFor="id">아이디</label>
-                <input placeholder="아이디를 입력해주세요" type='text' id="id"></input>
+                <label htmlFor="user_id">아이디</label>
+                <input
+                  placeholder="아이디를 입력해주세요"
+                  type='text'
+                  id="user_id"
+                  value={formData.user_id || ""}
+                  onChange={handleInputChange}
+                />
               </div>
               <div className='login-form-row'>
-                <label htmlFor="password">비밀번호</label>
-                <input placeholder="비밀번호를 입력해주세요" type='password' id="password"></input>
+                <label htmlFor="user_password">비밀번호</label>
+                <input
+                  placeholder="비밀번호를 입력해주세요"
+                  type='password'
+                  id="user_password"
+                  value={formData.user_password || ""}
+                  onChange={handleInputChange}
+                />
               </div>
             </div>
             <div className='login-buttons-wrap'>
