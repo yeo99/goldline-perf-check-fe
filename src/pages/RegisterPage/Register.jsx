@@ -65,7 +65,7 @@ function Register() {
                 placeholder="아이디를 입력해주세요"
                 type='text'
                 id="user_id"
-                value={formData.user_id}
+                value={formData.user_id || ""}
                 onChange={handleInputChange}
               />
             </div>
@@ -75,7 +75,7 @@ function Register() {
                 placeholder="비밀번호를 입력해주세요"
                 type='password'
                 id="user_password"
-                value={formData.user_password}
+                value={formData.user_password || ""}
                 onChange={handleInputChange}
               />
             </div>
@@ -85,7 +85,7 @@ function Register() {
                 placeholder="이름을 입력해주세요"
                 type='text'
                 id="user_name"
-                value={formData.user_name}
+                value={formData.user_name || ""}
                 onChange={handleInputChange}
               />
             </div>
@@ -95,7 +95,7 @@ function Register() {
                 placeholder="이메일 주소를 입력해주세요"
                 type='text'
                 id="user_email"
-                value={formData.user_email}
+                value={formData.user_email || ""}
                 onChange={handleInputChange}
               />
             </div>
@@ -114,7 +114,7 @@ function Register() {
               <select
                 name='user_charge'
                 id="user_charge"
-                value={formData.user_charge}
+                value={formData.user_charge || ""}
                 onChange={handleInputChange}
               >
                 <option value='' disabled selected>선택해주세요</option>
@@ -131,7 +131,7 @@ function Register() {
                 placeholder="YYYY-MM-DD 형식으로 입력해주세요"
                 type='text'
                 id="user_birth_date"
-                value={formData.user_birth_date}
+                value={formData.user_birth_date || ""}
                 onChange={handleInputChange}
               />
             </div>
@@ -141,7 +141,7 @@ function Register() {
                 placeholder="재직중인 사명을 입력해주세요"
                 type='text'
                 id="user_company"
-                value={formData.user_company}
+                value={formData.user_company || ""}
                 onChange={handleInputChange}
               />
             </div>
