@@ -1,4 +1,5 @@
 @import './fonts/font.scss';
+@import './styles/common/normalize.scss';
 /* common */
 * {
     box-sizing: border-box !important;

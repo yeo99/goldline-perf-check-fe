@@ -1,5 +1,4 @@
 // Common
-import { Reset } from 'styled-reset'
 import { Route, Routes } from 'react-router-dom'
 
 import LoginHeader from "./components/LoginHeader/LoginHeader";
@@ -11,7 +10,6 @@ import Check from './pages/CheckPage/Check';
 function App() {
   return (
     <div className="App">
-      <Reset/>
       <Routes>
         <Route path="/" element={<Login/>}/>
         <Route path="/login" element={<Login/>}/>
