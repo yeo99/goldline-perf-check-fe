@@ -71,7 +71,7 @@ function Check() {
 						<div className='select-wrap'>
 							<div className='category-title'>중분류</div>
 							{/* <Form.Select onChange={handleMiddleClassChange} disabled={!selectedHighClass}> */}
-							<Form.Select onChange={handleMiddleClassChange} disabled={!selectedHighClass}>
+							<Form.Select onChange={handleMiddleClassChange}>
 								{!selectedHighClass && <option>대분류를 먼저 선택해주세요</option>}
 								{middleClassCategory.map(item => (
 									<option key={item.id} value={item.id}>
