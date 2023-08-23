@@ -7,6 +7,7 @@ import { createAxios } from '../../api/axiosInstance'
 import Form from 'react-bootstrap/Form';
 import './Check.scss'
 import Table from 'react-bootstrap/Table'
+import Button from 'react-bootstrap/Button'
 
 function Check() {
 	const [question, setQuestion] = useState(null);
@@ -122,7 +123,7 @@ function Check() {
 		console.log(finalSelectedFacilityName)
 		console.log(finalSelectedFacilityCode)
 		try {
-			console.log('검사지')
+			
 		} catch(error) {
 
 		}
@@ -161,7 +162,7 @@ function Check() {
 					<div className='select-container'>
 						<PageTitle pageTitle="평가 작성"></PageTitle>
 						<div className='select-wrap'>
-							<div className='category-title'>대분류</div>
+							<div className='category-title'><b>대분류</b></div>
 							<Form.Select onChange={handleHighClassChange}>
 								<option value="" disabled selected>대분류를 선택해주세요</option>
 								{highClassCategory.map(item => (
@@ -174,7 +175,7 @@ function Check() {
 
 						{middleClassCategory.length > 0 && (
 							<div className='select-wrap'>
-								<div className='category-title'>중분류</div>
+								<div className='category-title'><b>중분류</b></div>
 								<Form.Select onChange={handleMiddleClassChange}>
 									<option value="" disabled selected>중분류를 선택해주세요</option>
 									{middleClassCategory.map(item => (
@@ -188,7 +189,7 @@ function Check() {
 
 						{lowClassCategory.length > 0 && (
 							<div className='select-wrap'>
-								<div className='category-title'>소분류</div>
+								<div className='category-title'><b>소분류</b></div>
 								<Form.Select onChange={handleLowClassChange}>
 									<option value="" disabled selected>소분류를 선택해주세요</option>
 									{lowClassCategory.map(item => (
@@ -202,7 +203,7 @@ function Check() {
 
 						{lowestClassCategory.length > 0 && (
 							<div className='select-wrap'>
-								<div className='category-title'>세분류</div>
+								<div className='category-title'><b>세분류</b></div>
 								<Form.Select onChange={handleLowestClassChange}>
 									<option value="" disabled selected>세분류를 선택해주세요</option>
 									{lowestClassCategory.map(item => (
@@ -217,24 +218,25 @@ function Check() {
 				</div>
 				<div className='question-container'>
 					<div className='facility-table'>
+						<PageTitle pageTitle="성능평가 체크리스트"></PageTitle>
 						<Table bordered>
 							<tbody>
 								<tr>
-									<td rowSpan={4}>시설개요</td>
+									<td rowSpan={4}><b>시설개요</b></td>
 								</tr>
 								<tr>
-									<td>노선명</td>
-									<td>2</td>
-									<td rowSpan={4}>시설명</td>
-									<td rowSpan={3}>잠자고싶다</td>
+									<td><b>노선명</b></td>
+									<td>양촌역</td>
+									<td rowSpan={4}><b>시설명</b></td>
+									<td rowSpan={3}>구조물(공통)</td>
 								</tr>
 								<tr>
-									<td>구간명</td>
-									<td>5</td>
+									<td><b>구간명</b></td>
+									<td>양촌역-구래역</td>
 								</tr>
 								<tr>
-									<td>시설분류코드</td>
-									<td>8</td>
+									<td><b>구간명</b></td>
+									<td>A000</td>
 								</tr>
 							</tbody>
     				</Table>
@@ -257,13 +259,19 @@ function Check() {
 							</thead>
 							<tbody>
 								<tr>
-									<td rowSpan={7}>안전성</td>
+									<td rowSpan={7}><b>안전성</b></td>
 									<td rowSpan={5}>물리적 상태평가 결과</td>
 									<td>불량</td>
 									<td>1</td> 
-									<td rowSpan={5}></td>
-									<td rowSpan={5}></td>
-									<td rowSpan={5}></td>
+									<td rowSpan={5}>
+										{/* <input type='text' style={{ width:'100%' }}></input> */}
+										</td>
+									<td rowSpan={5}>
+										{/* <input type='text' style={{ width:'100%' }}></input> */}
+										</td>
+									<td rowSpan={5}>
+										{/* <input type='text' style={{ width:'100%' }}></input> */}
+										</td>
 								</tr>
 								<tr>
 									<td>미흡</td>
@@ -294,7 +302,7 @@ function Check() {
 									<td>5</td>
 								</tr>
 								<tr>
-									<td rowSpan={10}>내구성</td>
+									<td rowSpan={10}><b>내구성</b></td>
 									<td rowSpan={5}>열차 통과 톤수(누적)</td>
 									<td>10억톤 이상</td>
 									<td>1</td>
@@ -343,7 +351,7 @@ function Check() {
 									<td>5</td>
 								</tr>
 								<tr>
-									<td rowSpan={3}>사용성</td>
+									<td rowSpan={3}><b>사용성</b></td>
 									<td rowSpan={3}>재해 발생 횟수(5년 이내)</td>
 									<td>2회 이상</td>
 									<td>1</td>
@@ -361,6 +369,53 @@ function Check() {
 								</tr>
 							</tbody>
 						</Table>
+					</div>
+					<div className='result-container'>
+						<div className='check-result-score-table'>
+							<PageTitle pageTitle="종합평가결과"></PageTitle>
+							<Table bordered>
+								<thead>
+									<tr>
+										<th>부문</th>
+										<th>평가지수 합계</th>
+										<th>부문 중요도</th>
+										<th>평가지수</th>
+										<th>종합평가지수</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><b>안정성(SF)</b></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td rowSpan={3}></td>
+									</tr>
+									<tr>
+										<td><b>내구성(D)</b></td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td><b>사용성(S)</b></td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+								</tbody>
+							</Table>
+							<div className='check-comment'>
+								<Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+      					  {/* <Form.Label>평가의견 및 기타사항</Form.Label> */}
+									<div className='category-title'><b>평가의견 및 기타사항</b></div>
+      					  <Form.Control as="textarea" rows={3} />
+      					</Form.Group>
+							</div>
+						</div>
+						<div className='check-button-container'>
+							<Button className='check-button'>평가 제출</Button>
+						</div>
 					</div>
 				</div>
 			</Container>
