@@ -8,6 +8,7 @@ import Form from 'react-bootstrap/Form';
 import './Check.scss'
 import Table from 'react-bootstrap/Table'
 import Button from 'react-bootstrap/Button'
+import { sumOfArray } from '../../utils/sumAllArrayElements'
 
 function Check() {
 	const [question, setQuestion] = useState(null);
@@ -28,8 +29,26 @@ function Check() {
 	const [finalSelectedFacilityName, setFinalSelectedFacilityName] = useState(null);
 	const [finalSelectedFacilityCode, setFinalSelectedFacilityCode] = useState(null);
 
-	const [evaluationResults, setEvaluationResults] = useState({});	// 평가 결과를 담는 객체
-	const [importances, setImportances] = useState({});	// 중요도 값을 담는 객체
+	// 평가 결과를 담는 객체
+	const [evaluationResults, setEvaluationResults] = useState({
+		stabilityEvaluation: [],
+		durabilityEvaluation: [],
+		usabilityEvaluation: [],
+	});
+
+	// 평가지수 값을 담는다
+	const [evaluationIndices, setEvaluationIndices] = useState({
+		stabilityIndex: [],
+		durabilityIndex: [],
+    	usabilityIndex: []
+	})
+	
+	// 중요도 값을 담는다
+	const [importances, setImportances] = useState({
+		stabilityImportance: [],
+		durabilityImportance: [],
+		usabilityImportance: []
+	});
 
 	// 대분류 선택시 중분류 API 요청
 	const handleHighClassChange = (e) => {
@@ -90,7 +109,6 @@ function Check() {
 			.then(response => {
 				if (response.data && response.data.length > 0) {
 					setLowestClassCategory(response.data)
-					// setSelectedLowestClass(response.data[0].facility_code)
 					setFinalSelectedFacilityName(response.data[0].facility_code)
 					setFinalSelectedFacilityCode(response.data[0].id)
 				} else {
@@ -131,15 +149,64 @@ function Check() {
 
 		}
 	}
+
+	const calculateEvaluationIndex = (category, index, evaluationValue, importanceValue) => {
+		const result = evaluationValue * importanceValue;
+		
+		setEvaluationIndices(prevIndices => {
+			let currentIndices = Array.isArray(prevIndices[category]) 
+								 ? [...prevIndices[category]] 
+								 : new Array(index + 1).fill(0);
+			currentIndices[index] = result;
+			return { ...prevIndices, [category]: currentIndices };
+		});
+	};
+
+	const handleEvaluationChange = (category, index, value) => {
+		const numericValue = Number(value);
 	
-	const handleImportanceChange = (id, value) => {
-		const currentImportanceSum = Object.values(importances).reduce((acc, curr) => acc + curr, 0)
-		if (currentImportanceSum + value <= 100) {
-			setImportances(prev => ({...prev, [id]: value}))
-		} else {
-			alert("중요도의 합은 100을 넘을 수 없습니다.")
+		setEvaluationResults(prevState => {
+			let updatedState = {...prevState};
+			if (!updatedState[category]) {
+				updatedState[category] = [];
+			}
+			updatedState[category][index] = numericValue;
+			return updatedState;
+		});
+	
+		// 이 부분이 중요합니다. 중요도가 설정되어 있을 때만 평가지수를 갱신해야 합니다.
+		if (importances[category] && importances[category][index] !== undefined) {
+			// 바로 평가지수도 갱신
+			calculateEvaluationIndex(category, index, numericValue, importances[category][index]);
 		}
-	}
+	};
+	
+	const handleImportanceChange = (category, index, value) => {
+		const numericValue = Number(value);
+		
+		if (numericValue > 100) {
+			alert("개별 중요도는 100을 초과할 수 없습니다.");
+			return;
+		}
+		
+		let currentCategoryImportances = [...importances[category]];
+		currentCategoryImportances[index] = numericValue;
+		
+		const currentImportanceSum = currentCategoryImportances.reduce((acc, curr) => acc + curr, 0);
+		
+		if (currentImportanceSum <= 100) {
+			setImportances(prev => ({...prev, [category]: currentCategoryImportances}));
+		} else {
+			alert("중요도의 합은 100을 넘을 수 없습니다.");
+			return;
+		}
+	
+		// 평가지수 계산 및 저장
+		// 평가 결과가 이미 설정되어 있다면 평가지수를 업데이트합니다.
+		if (evaluationResults[category] && evaluationResults[category][index] !== undefined) {
+			calculateEvaluationIndex(category, index, evaluationResults[category][index], numericValue);
+		}
+	};
 
 	useEffect(() => {
 		// 대분류 코드 API 요청
@@ -157,9 +224,27 @@ function Check() {
 			newEvaluationIndex[key] = evaluationResults[key] * importances[key];
 		}
 
+		// 평가지수 갱신 로직
+		const updatedEvaluationIndices = { ...evaluationIndices };
+
+		for (let key in evaluationResults) {
+			// categoryKey 변환 예: stabilityEvaluation -> stabilityIndex
+			const categoryKey = key.replace('Evaluation', 'Index');
+			
+			updatedEvaluationIndices[categoryKey] = evaluationResults[key].map((result, index) => {
+				const importanceKey = categoryKey.replace('Index', 'Importance');
+				return result * (importances[importanceKey][index] || 0);
+			});
+		}
+		
+			setEvaluationIndices(updatedEvaluationIndices);
+
 		// 평가지수 변경
 		let totalEvaluationIndex = Object.values(newEvaluationIndex).reduce((acc, curr) => acc + curr, 0);
-	}, [selectedHighClass, evaluationResults, importances]);
+		// alert(JSON.stringify(evaluationResults));
+		// alert(JSON.stringify(importances))
+		// alert(JSON.stringify(evaluationIndices))
+	}, [selectedHighClass, evaluationResults, importances, evaluationResults]);
 
 	return (
 		<div className='check-page-container'>
@@ -272,7 +357,7 @@ function Check() {
 									<td>불량</td>
 									<td>1</td> 
 									<td rowSpan={5}>
-										<select>
+										<select onChange={(e) => handleEvaluationChange("stabilityEvaluation", 0, e.target.value)}>
 											<option>1</option>
 											<option>2</option>
 											<option>3</option>
@@ -284,11 +369,13 @@ function Check() {
 									<input
 										type="number"
 										min="0"
+										max="100"
 										className='importance-input'
-										onChange={(e) => handleImportanceChange("stability", )}
+										value={importances.stabilityImportance[0] || ""}
+										onChange={(e) => handleImportanceChange("stabilityImportance", 0, e.target.value)}
 									/>
 									</td>
-									<td rowSpan={5}></td>
+									<td rowSpan={5}>{evaluationIndices.stabilityIndex[0]}</td>
 								</tr>
 								<tr>
 									<td>미흡</td>
@@ -311,15 +398,22 @@ function Check() {
 									<td>내진성능 무</td>
 									<td>1</td>
 									<td rowSpan={2}>
-										<select>
+										<select onChange={(e) => handleEvaluationChange("stabilityEvaluation", 1, e.target.value)}>
 											<option>1</option>
 											<option>5</option>
 										</select>
 									</td>
 									<td rowSpan={2}>
-									<input type="number" min="0" className='importance-input'></input>
+									<input
+										type="number"
+										min="0"
+										max="100"
+										className='importance-input'
+										value={importances.stabilityImportance[1] || ""}
+										onChange={(e) => handleImportanceChange("stabilityImportance", 1, e.target.value)}
+									/>
 									</td>
-									<td rowSpan={2}></td>
+									<td rowSpan={2}>{evaluationIndices.stabilityIndex[1]}</td>
 								</tr>
 								<tr>
 									<td>내진성능 유(내진성능 불필요 포함)</td>
@@ -331,7 +425,7 @@ function Check() {
 									<td>10억톤 이상</td>
 									<td>1</td>
 									<td rowSpan={5}>
-										<select>
+										<select onChange={(e) => handleEvaluationChange("durabilityEvaluation", 0, e.target.value)}>
 											<option>1</option>
 											<option>2</option>
 											<option>3</option>
@@ -340,9 +434,16 @@ function Check() {
 										</select>
 									</td>
 									<td rowSpan={5}>
-										<input type="text" className='importance-input'></input>
+										<input
+											type="number"
+											min="0"
+											max="100"
+											className='importance-input'
+											value={importances.durabilityImportance[0] || ""}
+											onChange={(e) => handleImportanceChange("durabilityImportance", 0, e.target.value)}
+										/>
 									</td>
-									<td rowSpan={5}></td>
+									<td rowSpan={5}>{evaluationIndices.durabilityIndex[0]}</td>
 								</tr>
 								<tr>
 									<td>8억톤 ~ 10억톤 미만</td>
@@ -365,7 +466,7 @@ function Check() {
 									<td>내용연수의 100% 이상</td>
 									<td>1</td>
 									<td rowSpan={5}>
-										<select>
+										<select onChange={(e) => handleEvaluationChange("durabilityEvaluation", 1, e.target.value)}>
 											<option>1</option>
 											<option>2</option>
 											<option>3</option>
@@ -374,9 +475,16 @@ function Check() {
 										</select>
 									</td>
 									<td rowSpan={5}>
-										<input type="number" min="0" className='importance-input'></input>
+										<input
+											type="number"
+											min="0"
+											max="100"
+											className='importance-input'
+											value={importances.durabilityImportance[1] || ""}
+											onChange={(e) => handleImportanceChange("durabilityImportance", 1, e.target.value)}
+										/>
 									</td>
-									<td rowSpan={5}></td>
+									<td rowSpan={5}>{evaluationIndices.durabilityIndex[1]}</td>
 								</tr>
 								<tr>
 									<td>내용연수의 75% ~ 100% 미만</td>
@@ -400,16 +508,23 @@ function Check() {
 									<td>2회 이상</td>
 									<td>1</td>
 									<td rowSpan={3}>
-										<select>
+										<select onChange={(e) => handleEvaluationChange("usabilityEvaluation", 0, e.target.value)}>
 											<option>1</option>
 											<option>3</option>
 											<option>5</option>
 										</select>
 									</td>
 									<td rowSpan={3}>
-									<input type="number" min="0" className='importance-input'></input>
+										<input
+											type="number"
+											min="0"
+											max="100"
+											className='importance-input'
+											value={importances.usabilityImportance[0] || ""}
+											onChange={(e) => handleImportanceChange("usabilityImportance", 0, e.target.value)}
+										/>
 									</td>
-									<td rowSpan={3}></td>
+									<td rowSpan={3}>{evaluationIndices.usabilityIndex[0]}</td>
 								</tr>
 								<tr>
 									<td>1회</td>
@@ -431,29 +546,35 @@ function Check() {
 										<th>부문</th>
 										<th>평가지수 합계</th>
 										<th>부문 중요도</th>
-										<th>평가지수</th>
+										{/* 중복같다. 문의드려야 함 */}
+										{/* <th>평가지수</th> */}
+										<th>평가결과 합계</th>
 										<th>종합평가지수</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
 										<td><b>안정성(SF)</b></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td rowSpan={3}></td>
+										<td>{sumOfArray(evaluationIndices.stabilityIndex)}</td>
+										<td>{sumOfArray(importances.stabilityImportance)}</td>
+										<td>{sumOfArray(evaluationResults.stabilityEvaluation)}</td>
+										<td rowSpan={3}>{
+											sumOfArray(evaluationIndices.stabilityIndex)+
+											sumOfArray(evaluationIndices.durabilityIndex)+
+											sumOfArray(evaluationIndices.usabilityIndex)
+										}</td>
 									</tr>
 									<tr>
 										<td><b>내구성(D)</b></td>
-										<td></td>
-										<td></td>
-										<td></td>
+										<td>{sumOfArray(evaluationIndices.durabilityIndex)}</td>
+										<td>{sumOfArray(importances.durabilityImportance)}</td>
+										<td>{sumOfArray(evaluationResults.durabilityEvaluation)}</td>
 									</tr>
 									<tr>
 										<td><b>사용성(S)</b></td>
-										<td></td>
-										<td></td>
-										<td></td>
+										<td>{sumOfArray(evaluationIndices.usabilityIndex)}</td>
+										<td>{sumOfArray(importances.usabilityImportance)}</td>
+										<td>{sumOfArray(evaluationResults.usabilityEvaluation)}</td>
 									</tr>
 								</tbody>
 							</Table>
