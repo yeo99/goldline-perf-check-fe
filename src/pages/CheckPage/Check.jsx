@@ -28,6 +28,9 @@ function Check() {
 	const [finalSelectedFacilityName, setFinalSelectedFacilityName] = useState(null);
 	const [finalSelectedFacilityCode, setFinalSelectedFacilityCode] = useState(null);
 
+	const [evaluationResults, setEvaluationResults] = useState({});	// 평가 결과를 담는 객체
+	const [importances, setImportances] = useState({});	// 중요도 값을 담는 객체
+
 	// 대분류 선택시 중분류 API 요청
 	const handleHighClassChange = (e) => {
 		const selectedValue = e.target.value;
@@ -128,19 +131,15 @@ function Check() {
 
 		}
 	}
-	// const fetchQuestionsForCategory = async (category) => {
-	// 	try {
-	// 		const response = await fetch(`${process.env.PUBLIC_URL}/${category}.json`);
-	// 		if (response.ok) {
-	// 			const data = await response.json();
-	// 			setQuestions(data);
-	// 		} else {
-	// 			console.error("Failed to fetch questions for category:", category);
-	// 		}
-	// 	} catch (error) {
-	// 		console.error("Error fetching questions for category:", category, error);
-	// 	}
-	// }
+	
+	const handleImportanceChange = (id, value) => {
+		const currentImportanceSum = Object.values(importances).reduce((acc, curr) => acc + curr, 0)
+		if (currentImportanceSum + value <= 100) {
+			setImportances(prev => ({...prev, [id]: value}))
+		} else {
+			alert("중요도의 합은 100을 넘을 수 없습니다.")
+		}
+	}
 
 	useEffect(() => {
 		// 대분류 코드 API 요청
@@ -151,7 +150,16 @@ function Check() {
 			.catch(error => {
 				console.error('Error fetching high class categories:', error);
 			})
-	}, [selectedHighClass]);
+
+		// 평가 결과, 중요도 핸들링 코드
+		let newEvaluationIndex = {};
+		for (let key in evaluationResults) {
+			newEvaluationIndex[key] = evaluationResults[key] * importances[key];
+		}
+
+		// 평가지수 변경
+		let totalEvaluationIndex = Object.values(newEvaluationIndex).reduce((acc, curr) => acc + curr, 0);
+	}, [selectedHighClass, evaluationResults, importances]);
 
 	return (
 		<div className='check-page-container'>
@@ -264,14 +272,23 @@ function Check() {
 									<td>불량</td>
 									<td>1</td> 
 									<td rowSpan={5}>
-										{/* <input type='text' style={{ width:'100%' }}></input> */}
-										</td>
+										<select>
+											<option>1</option>
+											<option>2</option>
+											<option>3</option>
+											<option>4</option>
+											<option>5</option>
+										</select>
+									</td>
 									<td rowSpan={5}>
-										{/* <input type='text' style={{ width:'100%' }}></input> */}
-										</td>
-									<td rowSpan={5}>
-										{/* <input type='text' style={{ width:'100%' }}></input> */}
-										</td>
+									<input
+										type="number"
+										min="0"
+										className='importance-input'
+										onChange={(e) => handleImportanceChange("stability", )}
+									/>
+									</td>
+									<td rowSpan={5}></td>
 								</tr>
 								<tr>
 									<td>미흡</td>
@@ -293,8 +310,15 @@ function Check() {
 									<td rowSpan={2}>내진성능</td>
 									<td>내진성능 무</td>
 									<td>1</td>
-									<td rowSpan={2}></td>
-									<td rowSpan={2}></td>
+									<td rowSpan={2}>
+										<select>
+											<option>1</option>
+											<option>5</option>
+										</select>
+									</td>
+									<td rowSpan={2}>
+									<input type="number" min="0" className='importance-input'></input>
+									</td>
 									<td rowSpan={2}></td>
 								</tr>
 								<tr>
@@ -306,8 +330,18 @@ function Check() {
 									<td rowSpan={5}>열차 통과 톤수(누적)</td>
 									<td>10억톤 이상</td>
 									<td>1</td>
-									<td rowSpan={5}></td>
-									<td rowSpan={5}></td>
+									<td rowSpan={5}>
+										<select>
+											<option>1</option>
+											<option>2</option>
+											<option>3</option>
+											<option>4</option>
+											<option>5</option>
+										</select>
+									</td>
+									<td rowSpan={5}>
+										<input type="text" className='importance-input'></input>
+									</td>
 									<td rowSpan={5}></td>
 								</tr>
 								<tr>
@@ -330,8 +364,18 @@ function Check() {
 									<td rowSpan={5}>경과연수</td>
 									<td>내용연수의 100% 이상</td>
 									<td>1</td>
-									<td rowSpan={5}></td>
-									<td rowSpan={5}></td>
+									<td rowSpan={5}>
+										<select>
+											<option>1</option>
+											<option>2</option>
+											<option>3</option>
+											<option>4</option>
+											<option>5</option>
+										</select>
+									</td>
+									<td rowSpan={5}>
+										<input type="number" min="0" className='importance-input'></input>
+									</td>
 									<td rowSpan={5}></td>
 								</tr>
 								<tr>
@@ -355,8 +399,16 @@ function Check() {
 									<td rowSpan={3}>재해 발생 횟수(5년 이내)</td>
 									<td>2회 이상</td>
 									<td>1</td>
-									<td rowSpan={3}></td>
-									<td rowSpan={3}></td>
+									<td rowSpan={3}>
+										<select>
+											<option>1</option>
+											<option>3</option>
+											<option>5</option>
+										</select>
+									</td>
+									<td rowSpan={3}>
+									<input type="number" min="0" className='importance-input'></input>
+									</td>
 									<td rowSpan={3}></td>
 								</tr>
 								<tr>

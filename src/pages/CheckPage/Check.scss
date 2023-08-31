@@ -34,3 +34,12 @@
     font-family: 'notoSansKrRegular';
     margin-bottom: 8px;
 }
+
+td, th {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.importance-input {
+    width: 3rem;
+}
