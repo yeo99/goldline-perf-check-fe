@@ -358,6 +358,7 @@ function Check() {
 									<td>1</td> 
 									<td rowSpan={5}>
 										<select onChange={(e) => handleEvaluationChange("stabilityEvaluation", 0, e.target.value)}>
+											<option value="" disabled selected>선택</option>
 											<option>1</option>
 											<option>2</option>
 											<option>3</option>
@@ -399,6 +400,7 @@ function Check() {
 									<td>1</td>
 									<td rowSpan={2}>
 										<select onChange={(e) => handleEvaluationChange("stabilityEvaluation", 1, e.target.value)}>
+											<option value="" disabled selected>선택</option>
 											<option>1</option>
 											<option>5</option>
 										</select>
@@ -426,6 +428,7 @@ function Check() {
 									<td>1</td>
 									<td rowSpan={5}>
 										<select onChange={(e) => handleEvaluationChange("durabilityEvaluation", 0, e.target.value)}>
+											<option value="" disabled selected>선택</option>
 											<option>1</option>
 											<option>2</option>
 											<option>3</option>
@@ -467,6 +470,7 @@ function Check() {
 									<td>1</td>
 									<td rowSpan={5}>
 										<select onChange={(e) => handleEvaluationChange("durabilityEvaluation", 1, e.target.value)}>
+											<option value="" disabled selected>선택</option>
 											<option>1</option>
 											<option>2</option>
 											<option>3</option>
@@ -509,6 +513,7 @@ function Check() {
 									<td>1</td>
 									<td rowSpan={3}>
 										<select onChange={(e) => handleEvaluationChange("usabilityEvaluation", 0, e.target.value)}>
+											<option value="" disabled selected>선택</option>
 											<option>1</option>
 											<option>3</option>
 											<option>5</option>
