@@ -189,23 +189,23 @@ function Check() {
 			return;
 		}
 		
-		let currentCategoryImportances = [...importances[category]];
+		let tempImportances = { ...importances };
+		let currentCategoryImportances = [...tempImportances[category]];
+
 		currentCategoryImportances[index] = numericValue;
-		
-		const currentImportanceSum = currentCategoryImportances.reduce((acc, curr) => acc + curr, 0);
-		
-		if (currentImportanceSum <= 10) {
-			setImportances(prev => ({...prev, [category]: currentCategoryImportances}));
-		} else {
+		tempImportances[category] = currentCategoryImportances;
+
+		const totalImportance = Object.values(tempImportances).flat().reduce((acc, curr) => acc + curr, 0)
+
+		if (totalImportance > 10) {
 			alert("중요도의 합은 10을 넘을 수 없습니다.");
 			return;
 		}
-	
-		// 평가지수 계산 및 저장
-		// 평가 결과가 이미 설정되어 있다면 평가지수를 업데이트합니다.
-		if (evaluationResults[category] && evaluationResults[category][index] !== undefined) {
-			calculateEvaluationIndex(category, index, evaluationResults[category][index], numericValue);
-		}
+		setImportances(tempImportances);
+
+    	if (evaluationResults[category] && evaluationResults[category][index] !== undefined) {
+    	    calculateEvaluationIndex(category, index, evaluationResults[category][index], numericValue);
+    	}
 	};
 
 	useEffect(() => {
