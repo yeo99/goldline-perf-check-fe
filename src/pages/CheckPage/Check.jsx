@@ -184,8 +184,8 @@ function Check() {
 	const handleImportanceChange = (category, index, value) => {
 		const numericValue = Number(value);
 		
-		if (numericValue > 100) {
-			alert("개별 중요도는 100을 초과할 수 없습니다.");
+		if (numericValue > 10) {
+			alert("개별 중요도는 10을 초과할 수 없습니다.");
 			return;
 		}
 		
@@ -194,10 +194,10 @@ function Check() {
 		
 		const currentImportanceSum = currentCategoryImportances.reduce((acc, curr) => acc + curr, 0);
 		
-		if (currentImportanceSum <= 100) {
+		if (currentImportanceSum <= 10) {
 			setImportances(prev => ({...prev, [category]: currentCategoryImportances}));
 		} else {
-			alert("중요도의 합은 100을 넘을 수 없습니다.");
+			alert("중요도의 합은 10을 넘을 수 없습니다.");
 			return;
 		}
 	
@@ -369,7 +369,7 @@ function Check() {
 									<input
 										type="number"
 										min="0"
-										max="100"
+										max="10"
 										className='importance-input'
 										value={importances.stabilityImportance[0] || ""}
 										onChange={(e) => handleImportanceChange("stabilityImportance", 0, e.target.value)}
@@ -407,7 +407,7 @@ function Check() {
 									<input
 										type="number"
 										min="0"
-										max="100"
+										max="10"
 										className='importance-input'
 										value={importances.stabilityImportance[1] || ""}
 										onChange={(e) => handleImportanceChange("stabilityImportance", 1, e.target.value)}
@@ -437,7 +437,7 @@ function Check() {
 										<input
 											type="number"
 											min="0"
-											max="100"
+											max="10"
 											className='importance-input'
 											value={importances.durabilityImportance[0] || ""}
 											onChange={(e) => handleImportanceChange("durabilityImportance", 0, e.target.value)}
@@ -478,7 +478,7 @@ function Check() {
 										<input
 											type="number"
 											min="0"
-											max="100"
+											max="10"
 											className='importance-input'
 											value={importances.durabilityImportance[1] || ""}
 											onChange={(e) => handleImportanceChange("durabilityImportance", 1, e.target.value)}
@@ -518,7 +518,7 @@ function Check() {
 										<input
 											type="number"
 											min="0"
-											max="100"
+											max="10"
 											className='importance-input'
 											value={importances.usabilityImportance[0] || ""}
 											onChange={(e) => handleImportanceChange("usabilityImportance", 0, e.target.value)}
