@@ -321,7 +321,7 @@ function Check() {
 									<td><b>노선명</b></td>
 									<td>양촌역</td>
 									<td rowSpan={4}><b>시설명</b></td>
-									<td rowSpan={3}>구조물(공통)</td>
+									<td rowSpan={3}>{finalSelectedFacilityName || "미선택"}</td>
 								</tr>
 								<tr>
 									<td><b>구간명</b></td>
