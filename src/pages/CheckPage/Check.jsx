@@ -25,6 +25,8 @@ function Check() {
 
 	const [railWayStation, setRailWayStation] = useState([]);	// 노선명 리스트
 	const [railWaySection, setRailWaySection] = useState([]);	// 구간명 리스트
+	const [selectedStation, setSelectedStation] = useState("");	// 선택된 노선명
+	const [selectedSection, setSelectedSection] = useState("");	// 선택된 구간명
 
 	const [finalSelectedFacilityName, setFinalSelectedFacilityName] = useState(null);
 	const [finalSelectedFacilityCode, setFinalSelectedFacilityCode] = useState(null);
@@ -137,6 +139,28 @@ function Check() {
 			.then(response => {
 				setRailWayStation(response.data)
 			})
+			.catch(err => {
+				alert('노선명을 불러오던 중 오류가 발생하였습니다.')
+			})
+	}
+
+	// 구간명 API 요청
+	const handleRailwaySection = () => {
+		createAxios.get('/railway/sections')
+			.then(response => {
+				setRailWaySection(response.data)
+			})
+			.catch(err => {
+				alert('구간명을 불러오던 중 오류가 발생하였습니다.')
+			})
+	}
+
+	const handleSelectedStation = (e) => {
+		setSelectedStation(e.target.value)
+	}
+
+	const handleSelectedSection = (e) => {
+		setSelectedSection(e.target.value);
 	}
 
 	// 검사지를 가져옴
@@ -237,7 +261,9 @@ function Check() {
 			});
 		}
 		
-			setEvaluationIndices(updatedEvaluationIndices);
+		setEvaluationIndices(updatedEvaluationIndices);
+		handleRailwayStation()
+		handleRailwaySection();
 
 		// 평가지수 변경
 		let totalEvaluationIndex = Object.values(newEvaluationIndex).reduce((acc, curr) => acc + curr, 0);
@@ -319,17 +345,35 @@ function Check() {
 								</tr>
 								<tr>
 									<td><b>노선명</b></td>
-									<td>양촌역</td>
+									<td>
+										<Form.Select onChange={handleSelectedStation}>
+											<option value="" disabled selected>노선명을 선택해주세요</option>
+											{railWayStation.map(station => (
+												<option key={station.id} value={station.id}>
+													{station.station_name}
+												</option>
+											))}
+										</Form.Select>
+									</td>
 									<td rowSpan={4}><b>시설명</b></td>
 									<td rowSpan={3}>{finalSelectedFacilityName || "미선택"}</td>
 								</tr>
 								<tr>
 									<td><b>구간명</b></td>
-									<td>양촌역-구래역</td>
+									<td>
+										<Form.Select onChange={handleSelectedSection}>
+											<option value="" disabled selected>구간명을 선택해주세요</option>
+											{railWaySection.map(section => (
+												<option key={section.id} value={section.id}>
+													{section.section_name}
+												</option>
+											))}
+										</Form.Select>
+									</td>
 								</tr>
 								<tr>
-									<td><b>구간명</b></td>
-									<td>A000</td>
+									<td><b>시설분류코드</b></td>
+									<td>{finalSelectedFacilityCode}</td>
 								</tr>
 							</tbody>
     				</Table>
