@@ -63,18 +63,25 @@ function Check() {
     	setMiddleClassCategory([]);
     	setLowClassCategory([]);
     	setLowestClassCategory([]);
-
+		setFinalSelectedFacilityCode(null);	// 분류 변경시 최종 선택값 초기화
+		setFinalSelectedFacilityName(null);	// 분류 변경시 최종 선택값 초기화
 		createAxios.get(`/facilities/middle-class/${selectedValue}`)
-			.then(response => {
-				if (response.data && response.data.length > 0) {
-					setMiddleClassCategory(response.data)
-					// setSelectedMiddleClass(response.data[0].facility_code)
-					setFinalSelectedFacilityName(response.data[0].facility_code);
-					setFinalSelectedFacilityCode(response.data[0].id);
-				} else {
-					fetchQuestionAsCategory(finalSelectedFacilityName, finalSelectedFacilityCode);
+        .then(response => {
+            if (response.data && response.data.length > 0) {
+                setMiddleClassCategory(response.data);
+                setSelectedMiddleClass(response.data[0].id);  // 첫 번째 항목을 자동으로 선택
+            } else {
+                // 하위 카테고리가 없으면 해당 카테고리로 질문 목록을 가져옵니다.
+				// setFinalSelectedFacilityCode(selectedValue);
+                // fetchQuestionAsCategory(selectedValue, finalSelectedFacilityCode);
+				setFinalSelectedFacilityCode(selectedValue);
+				const selectedItem = highClassCategory.find(item => item.id === selectedValue);
+				if (selectedItem) {
+					setFinalSelectedFacilityName(selectedItem.facility_code);
 				}
-			})
+            	fetchQuestionAsCategory(selectedValue, finalSelectedFacilityCode);
+            }
+        })
 	}
 
 	// 중분류 선택시 소분류 API 요청
@@ -86,18 +93,25 @@ function Check() {
     	setSelectedLowestClass(null);
     	setLowClassCategory([]);
     	setLowestClassCategory([]);
-
+		setFinalSelectedFacilityCode(null);	// 분류 변경시 최종 선택값 초기화
+		setFinalSelectedFacilityName(null);	// 분류 변경시 최종 선택값 초기화
 		createAxios.get(`/facilities/low-class/${selectedValue}`)
-			.then(response => {
-				if (response.data && response.data.length > 0) {
-					setLowClassCategory(response.data)
-					// setSelectedLowClass(response.data[0].facility_code)
-					setFinalSelectedFacilityName(response.data[0].facility_code)
-					setFinalSelectedFacilityCode(response.data[0].id)
-				} else {
-					fetchQuestionAsCategory(finalSelectedFacilityName, finalSelectedFacilityCode);
+        .then(response => {
+            if (response.data && response.data.length > 0) {
+                setLowClassCategory(response.data);
+                setSelectedLowClass(response.data[0].id);  // 첫 번째 항목을 자동으로 선택
+            } else {
+                // 하위 카테고리가 없으면 해당 카테고리로 질문 목록을 가져옵니다.
+				// setFinalSelectedFacilityCode(selectedValue);
+                // fetchQuestionAsCategory(selectedValue, finalSelectedFacilityCode);
+				setFinalSelectedFacilityCode(selectedValue);
+				const selectedItem = middleClassCategory.find(item => item.id === selectedValue);
+				if (selectedItem) {
+					setFinalSelectedFacilityName(selectedItem.facility_code);
 				}
-			})
+            	fetchQuestionAsCategory(selectedValue, finalSelectedFacilityCode);
+            	}
+        })
 	}
 	
 	// 소분류 선택시 세분류 API 요청
@@ -107,16 +121,25 @@ function Check() {
 		// 나머지 하위 분류 상태 초기화
 		setLowestClassCategory([])
 		setSelectedLowestClass(null)
+		setFinalSelectedFacilityCode(null);	// 분류 변경시 최종 선택값 초기화
+		setFinalSelectedFacilityName(null);	// 분류 변경시 최종 선택값 초기화
 		createAxios.get(`/facilities/lowest-class/${selectedValue}`)
-			.then(response => {
-				if (response.data && response.data.length > 0) {
-					setLowestClassCategory(response.data)
-					setFinalSelectedFacilityName(response.data[0].facility_code)
-					setFinalSelectedFacilityCode(response.data[0].id)
-				} else {
-					fetchQuestionAsCategory(finalSelectedFacilityName, finalSelectedFacilityCode);
+        .then(response => {
+            if (response.data && response.data.length > 0) {
+                setLowestClassCategory(response.data);
+                setSelectedLowestClass(response.data[0].id);  // 첫 번째 항목을 자동으로 선택
+            } else {
+                // 하위 카테고리가 없으면 해당 카테고리로 질문 목록을 가져옵니다.
+				// setFinalSelectedFacilityCode(selectedValue);	
+                // fetchQuestionAsCategory(selectedValue, finalSelectedFacilityCode);
+				setFinalSelectedFacilityCode(selectedValue);
+				const selectedItem = lowClassCategory.find(item => item.id === selectedValue);
+				if (selectedItem) {
+					setFinalSelectedFacilityName(selectedItem.facility_code);
 				}
-			})
+            	fetchQuestionAsCategory(selectedValue, finalSelectedFacilityCode);
+            }
+        })
 	}
 
 	// 세분류 변경시
@@ -411,14 +434,6 @@ function Check() {
 										</select>
 									</td>
 									<td rowSpan={5}>
-									{/* <input
-										type="number"
-										min="0"
-										max="10"
-										className='importance-input'
-										value={importances.stabilityImportance[0] || ""}
-										onChange={(e) => handleImportanceChange("stabilityImportance", 0, e.target.value)}
-									/> */}
 									<select
 										className='importance-input'
 										value={importances.stabilityImportance[0] || ""}
@@ -462,14 +477,6 @@ function Check() {
 										</select>
 									</td>
 									<td rowSpan={2}>
-									{/* <input
-										type="number"
-										min="0"
-										max="10"
-										className='importance-input'
-										value={importances.stabilityImportance[1] || ""}
-										onChange={(e) => handleImportanceChange("stabilityImportance", 1, e.target.value)}
-									/> */}
 										<select
 											className='importance-input'
 											value={importances.stabilityImportance[1] || ""}
@@ -505,14 +512,6 @@ function Check() {
 										</select>
 									</td>
 									<td rowSpan={5}>
-										{/* <input
-											type="number"
-											min="0"
-											max="10"
-											className='importance-input'
-											value={importances.durabilityImportance[0] || ""}
-											onChange={(e) => handleImportanceChange("durabilityImportance", 0, e.target.value)}
-										/> */}
 										<select
 											className='importance-input'
 											value={importances.durabilityImportance[0] || ""}
@@ -559,14 +558,6 @@ function Check() {
 										</select>
 									</td>
 									<td rowSpan={5}>
-										{/* <input
-											type="number"
-											min="0"
-											max="10"
-											className='importance-input'
-											value={importances.durabilityImportance[1] || ""}
-											onChange={(e) => handleImportanceChange("durabilityImportance", 1, e.target.value)}
-										/> */}
 										<select
 											className='importance-input'
 											value={importances.durabilityImportance[1] || ""}
@@ -612,14 +603,6 @@ function Check() {
 										</select>
 									</td>
 									<td rowSpan={3}>
-										{/* <input
-											type="number"
-											min="0"
-											max="10"
-											className='importance-input'
-											value={importances.usabilityImportance[0] || ""}
-											onChange={(e) => handleImportanceChange("usabilityImportance", 0, e.target.value)}
-										/> */}
 										<select
 											className='importance-input'
 											value={importances.usabilityImportance[0] || ""}
