@@ -184,10 +184,10 @@ function Check() {
 	const handleImportanceChange = (category, index, value) => {
 		const numericValue = Number(value);
 		
-		if (numericValue > 10) {
-			alert("개별 중요도는 10을 초과할 수 없습니다.");
-			return;
-		}
+		// if (numericValue > 10) {
+		// 	alert("개별 중요도는 10을 초과할 수 없습니다.");
+		// 	return;
+		// }
 		
 		let tempImportances = { ...importances };
 		let currentCategoryImportances = [...tempImportances[category]];
@@ -197,10 +197,10 @@ function Check() {
 
 		const totalImportance = Object.values(tempImportances).flat().reduce((acc, curr) => acc + curr, 0)
 
-		if (totalImportance > 10) {
-			alert("중요도의 합은 10을 넘을 수 없습니다.");
-			return;
-		}
+		// if (totalImportance > 10) {
+		// 	alert("중요도의 합은 10을 넘을 수 없습니다.");
+		// 	return;
+		// }
 		setImportances(tempImportances);
 
     	if (evaluationResults[category] && evaluationResults[category][index] !== undefined) {
@@ -367,14 +367,26 @@ function Check() {
 										</select>
 									</td>
 									<td rowSpan={5}>
-									<input
+									{/* <input
 										type="number"
 										min="0"
 										max="10"
 										className='importance-input'
 										value={importances.stabilityImportance[0] || ""}
 										onChange={(e) => handleImportanceChange("stabilityImportance", 0, e.target.value)}
-									/>
+									/> */}
+									<select
+										className='importance-input'
+										value={importances.stabilityImportance[0] || ""}
+										onChange={(e) => handleImportanceChange("stabilityImportance", 0, e.target.value)}
+									>
+										<option value="" disabled selected>선택</option>
+										<option>1</option>
+										<option>2</option>
+										<option>3</option>
+										<option>4</option>
+										<option>5</option>
+									</select>
 									</td>
 									<td rowSpan={5}>{evaluationIndices.stabilityIndex[0]}</td>
 								</tr>
@@ -406,14 +418,26 @@ function Check() {
 										</select>
 									</td>
 									<td rowSpan={2}>
-									<input
+									{/* <input
 										type="number"
 										min="0"
 										max="10"
 										className='importance-input'
 										value={importances.stabilityImportance[1] || ""}
 										onChange={(e) => handleImportanceChange("stabilityImportance", 1, e.target.value)}
-									/>
+									/> */}
+										<select
+											className='importance-input'
+											value={importances.stabilityImportance[1] || ""}
+											onChange={(e) => handleImportanceChange("stabilityImportance", 1, e.target.value)}
+										>
+											<option value="" disabled selected>선택</option>
+											<option>1</option>
+											<option>2</option>
+											<option>3</option>
+											<option>4</option>
+											<option>5</option>
+										</select>
 									</td>
 									<td rowSpan={2}>{evaluationIndices.stabilityIndex[1]}</td>
 								</tr>
@@ -437,14 +461,26 @@ function Check() {
 										</select>
 									</td>
 									<td rowSpan={5}>
-										<input
+										{/* <input
 											type="number"
 											min="0"
 											max="10"
 											className='importance-input'
 											value={importances.durabilityImportance[0] || ""}
 											onChange={(e) => handleImportanceChange("durabilityImportance", 0, e.target.value)}
-										/>
+										/> */}
+										<select
+											className='importance-input'
+											value={importances.durabilityImportance[0] || ""}
+											onChange={(e) => handleImportanceChange("durabilityImportance", 0, e.target.value)}
+										>
+											<option value="" disabled selected>선택</option>
+											<option>1</option>
+											<option>2</option>
+											<option>3</option>
+											<option>4</option>
+											<option>5</option>
+										</select>
 									</td>
 									<td rowSpan={5}>{evaluationIndices.durabilityIndex[0]}</td>
 								</tr>
@@ -479,14 +515,26 @@ function Check() {
 										</select>
 									</td>
 									<td rowSpan={5}>
-										<input
+										{/* <input
 											type="number"
 											min="0"
 											max="10"
 											className='importance-input'
 											value={importances.durabilityImportance[1] || ""}
 											onChange={(e) => handleImportanceChange("durabilityImportance", 1, e.target.value)}
-										/>
+										/> */}
+										<select
+											className='importance-input'
+											value={importances.durabilityImportance[1] || ""}
+											onChange={(e) => handleImportanceChange("durabilityImportance", 1, e.target.value)}
+										>
+											<option value="" disabled selected>선택</option>
+											<option>1</option>
+											<option>2</option>
+											<option>3</option>
+											<option>4</option>
+											<option>5</option>
+										</select>
 									</td>
 									<td rowSpan={5}>{evaluationIndices.durabilityIndex[1]}</td>
 								</tr>
@@ -520,14 +568,26 @@ function Check() {
 										</select>
 									</td>
 									<td rowSpan={3}>
-										<input
+										{/* <input
 											type="number"
 											min="0"
 											max="10"
 											className='importance-input'
 											value={importances.usabilityImportance[0] || ""}
 											onChange={(e) => handleImportanceChange("usabilityImportance", 0, e.target.value)}
-										/>
+										/> */}
+										<select
+											className='importance-input'
+											value={importances.usabilityImportance[0] || ""}
+											onChange={(e) => handleImportanceChange("usabilityImportance", 0, e.target.value)}
+										>
+											<option value="" disabled selected>선택</option>
+											<option>1</option>
+											<option>2</option>
+											<option>3</option>
+											<option>4</option>
+											<option>5</option>
+										</select>
 									</td>
 									<td rowSpan={3}>{evaluationIndices.usabilityIndex[0]}</td>
 								</tr>
