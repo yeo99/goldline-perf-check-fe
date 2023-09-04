@@ -71,9 +71,6 @@ function Check() {
                 setMiddleClassCategory(response.data);
                 setSelectedMiddleClass(response.data[0].id);  // 첫 번째 항목을 자동으로 선택
             } else {
-                // 하위 카테고리가 없으면 해당 카테고리로 질문 목록을 가져옵니다.
-				// setFinalSelectedFacilityCode(selectedValue);
-                // fetchQuestionAsCategory(selectedValue, finalSelectedFacilityCode);
 				setFinalSelectedFacilityCode(selectedValue);
 				const selectedItem = highClassCategory.find(item => item.id === selectedValue);
 				if (selectedItem) {
@@ -101,9 +98,6 @@ function Check() {
                 setLowClassCategory(response.data);
                 setSelectedLowClass(response.data[0].id);  // 첫 번째 항목을 자동으로 선택
             } else {
-                // 하위 카테고리가 없으면 해당 카테고리로 질문 목록을 가져옵니다.
-				// setFinalSelectedFacilityCode(selectedValue);
-                // fetchQuestionAsCategory(selectedValue, finalSelectedFacilityCode);
 				setFinalSelectedFacilityCode(selectedValue);
 				const selectedItem = middleClassCategory.find(item => item.id === selectedValue);
 				if (selectedItem) {
@@ -129,9 +123,6 @@ function Check() {
                 setLowestClassCategory(response.data);
                 setSelectedLowestClass(response.data[0].id);  // 첫 번째 항목을 자동으로 선택
             } else {
-                // 하위 카테고리가 없으면 해당 카테고리로 질문 목록을 가져옵니다.
-				// setFinalSelectedFacilityCode(selectedValue);	
-                // fetchQuestionAsCategory(selectedValue, finalSelectedFacilityCode);
 				setFinalSelectedFacilityCode(selectedValue);
 				const selectedItem = lowClassCategory.find(item => item.id === selectedValue);
 				if (selectedItem) {
@@ -229,13 +220,7 @@ function Check() {
 	};
 	
 	const handleImportanceChange = (category, index, value) => {
-		const numericValue = Number(value);
-		
-		// if (numericValue > 10) {
-		// 	alert("개별 중요도는 10을 초과할 수 없습니다.");
-		// 	return;
-		// }
-		
+		const numericValue = Number(value);		
 		let tempImportances = { ...importances };
 		let currentCategoryImportances = [...tempImportances[category]];
 
@@ -244,10 +229,6 @@ function Check() {
 
 		const totalImportance = Object.values(tempImportances).flat().reduce((acc, curr) => acc + curr, 0)
 
-		// if (totalImportance > 10) {
-		// 	alert("중요도의 합은 10을 넘을 수 없습니다.");
-		// 	return;
-		// }
 		setImportances(tempImportances);
 
     	if (evaluationResults[category] && evaluationResults[category][index] !== undefined) {
