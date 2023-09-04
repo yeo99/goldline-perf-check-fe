@@ -1,0 +1,45 @@
+.check-page-container {
+    
+    .container {
+        .question-container {
+            margin: 120px 0 0 0;
+        }
+        .inner-container {
+            margin: 120px 0 0 0;
+            .select-container {
+                
+                .select-wrap {
+                    margin: 0 0 20px 0;
+                    .category-title {
+                        font-size: 18px;
+                        font-family: 'notoSansKrRegular';
+                        margin-bottom: 8px;
+                    }
+                }
+            }
+        }
+        .result-container {
+            margin: 120px 0 120px 0;
+            .check-button-container {
+                display: flex;
+                justify-content: flex-end;
+            }
+        }
+    }
+}
+
+// 급하게 스켈 보내야해서 임시로 중복작성
+.category-title {
+    font-size: 18px;
+    font-family: 'notoSansKrRegular';
+    margin-bottom: 8px;
+}
+
+td, th {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.importance-input {
+    width: 3rem;
+}
